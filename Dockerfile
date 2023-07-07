@@ -11,13 +11,13 @@ COPY . .
 RUN go mod download
 RUN go mod verify
 
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -a -installsuffix cgo -o /go/bin/golang-screenshot .
+RUN go build main.go
 
 # Run stage
 FROM chromedp/headless-shell:latest
 # FROM alpine:latest
 WORKDIR /app
-COPY --from=builder /go/bin/golang-screenshot /go/bin/golang-screenshot
+COPY --from=builder /app/main /go/bin/golang-screenshot
 EXPOSE 8080
 
 
