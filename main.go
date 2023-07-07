@@ -22,11 +22,12 @@ func main()  {
 	router := app.NewRouter(screenshotController)
 
 	server := http.Server{
-		Addr: "localhost:8080",
+		Addr: ":8080",
 		Handler: middleware.NewAuthMiddleware(router),
 	}
 
+	fmt.Println("Server running on port 8080")
+
 	err := server.ListenAndServe()
 	helper.PanicIfError(err)
-	fmt.Println("Server running on port 8080")
 }
