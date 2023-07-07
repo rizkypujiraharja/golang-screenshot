@@ -14,9 +14,11 @@ RUN go mod verify
 RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -a -installsuffix cgo -o /go/bin/golang-screenshot .
 
 # Run stage
-FROM alpine:latest
+FROM chromedp/headless-shell:latest
+# FROM alpine:latest
 WORKDIR /app
 COPY --from=builder /go/bin/golang-screenshot /go/bin/golang-screenshot
 EXPOSE 8080
+
 
 ENTRYPOINT ["/go/bin/golang-screenshot"]
