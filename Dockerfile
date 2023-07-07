@@ -4,6 +4,9 @@ FROM golang:1.20-alpine as builder
 WORKDIR /app
 COPY . .
 
+RUN go mod download
+RUN go mod verify
+
 RUN go build main.go
 
 # Run stage
