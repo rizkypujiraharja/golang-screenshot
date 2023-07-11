@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 
@@ -10,11 +11,15 @@ import (
 	"golang-screenshot/middleware"
 	"golang-screenshot/service"
 
+	"github.com/chromedp/chromedp"
 	"github.com/go-playground/validator/v10"
 )
 
 func main()  {
 	validate := validator.New()
+
+	_, cancel := chromedp.NewContext(context.Background())
+	defer cancel()
 
 	screenshotService := service.NewScreenshotService(validate)
 	screenshotController := controller.NewScreenshotController(screenshotService)
