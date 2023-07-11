@@ -25,8 +25,8 @@ func (service ScreenshotServiceImpl) Take(ctx context.Context, request web.Scree
 	err := service.Validate.Struct(request)
 	helper.PanicIfError(err)
 
-	ctx_chrome, _ := chromedp.NewContext(ctx)
-	// defer cancel()
+	ctx_chrome, cancel := chromedp.NewContext(ctx)
+	defer cancel()
 
 	var buf []byte
 	if err := chromedp.Run(ctx_chrome,
